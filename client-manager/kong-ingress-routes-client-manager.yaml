@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: client-manager
+  namespace: default
   annotations:
     konghq.com/strip-path: "true"
     kubernetes.io/ingress.class: kong
@@ -9,7 +10,7 @@ spec:
   rules:
   - http:
       paths:
-        - path: /clients
+        - path: "/clients"
           pathType: Prefix
           backend:
             service:

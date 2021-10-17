@@ -1,0 +1,11 @@
+_format_version: "2.1"
+_transform: false
+
+services:
+  - name: client-manager-service
+    url: http://client-manager-service/clients/clients
+    routes:
+      - name: client-manager-create-client
+        methods: [POST]
+        protocols: [http]
+        paths: [/v1/clients]

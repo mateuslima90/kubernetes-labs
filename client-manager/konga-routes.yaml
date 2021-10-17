@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: konga
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  labels:
+    name: konga
+spec:
+  rules:
+  - host: konga.mydomain.com
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: konga-service
+            port: 
+              number: 80
+  tls:
+    - hosts:
+      - konga.mydomain.com
+      secretName: konga-mydomain-tls

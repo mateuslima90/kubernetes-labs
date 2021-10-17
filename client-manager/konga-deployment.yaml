@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: konga
+spec:
+  selector:
+    matchLabels:
+      app: konga
+  template:
+    metadata:
+      labels:
+        app: konga
+    spec:
+      containers:
+      - name: konga
+        image: pantsel/konga
+        env:
+        - name: DB_ADAPTER
+          value: postgres
+        - name: DB_HOST
+          value: 10.96.6.192
+        - name: DB_USER
+          value: kong
+        - name: DB_PASSWORD
+          value: kong
+        - name: DB_DATABASE
+          value: postgres
+        - name: TOKEN_SECRET
+          value: somesecretstring
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 1337
+          protocol: TCP
