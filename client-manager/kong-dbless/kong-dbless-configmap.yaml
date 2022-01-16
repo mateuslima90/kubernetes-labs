@@ -8,7 +8,7 @@ data:
     _transform: false
     services:
       - name: client-manager-service
-        host: client-manager-service.default.svc.cluster.local
+        host: 10.96.177.172
         protocol: http
         path: /clients
         #url: client-manager-service/clients
@@ -37,7 +37,7 @@ data:
             paths: 
               - /v1/clients$
       - name: users-grpc-service
-        host: users-grpc-service.default.svc.cluster.local
+        host: 10.96.44.201
         protocol: grpc
         port: 50051
         routes:
