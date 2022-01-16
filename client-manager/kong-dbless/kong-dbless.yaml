@@ -1206,7 +1206,7 @@ spec:
         - name: KONG_DATABASE
           value: "off"
         - name: KONG_DECLARATIVE_CONFIG
-          value: kong.yml
+          value: /etc/kong/kong.yml
         - name: KONG_NGINX_WORKER_PROCESSES
           value: "2"
         - name: KONG_PROXY_ACCESS_LOG
@@ -1217,6 +1217,12 @@ spec:
           value: /dev/stderr
         - name: KONG_PROXY_ERROR_LOG
           value: /dev/stderr
+        #envFrom:
+        #  - configMapRef: 
+        #      name: kong-dbless-configmap
+        volumeMounts:
+          - name: kong-dbless-configmap
+            mountPath:  /etc/kong
         image: kong:2.5
         resources: {}
         lifecycle:
@@ -1263,6 +1269,9 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1
-      
-      
+      volumes:
+        - name: kong-dbless-configmap
+          configMap:
+            name: kong-dbless-configmap
+          
       serviceAccountName: kong-serviceaccount

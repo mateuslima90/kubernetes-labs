@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: kong-dbless-configmap
+data:
+  kong.yml: |
+    _format_version: "2.1"
+    _transform: false
+    services:
+      - name: client-manager-service
+        host: client-manager-service
+        protocol: http
+        path: /clients
+        #url: client-manager-service/clients
+        routes:
+          - name: client-manager-create-client
+            regex_priority: 200
+            strip_path: false
+            methods: [POST]
+            protocols: [http]
+            paths: 
+              - /clients$
+          
+          - name: client-manager-getSingleClient
+            regex_priority: 201
+            strip_path: true
+            methods: [GET]
+            protocols: [http]
+            paths: 
+              - /v1/clients
+          
+          - name: client-manager-getAllClient
+            regex_priority: 202
+            strip_path: true
+            methods: [GET]
+            protocols: [http]
+            paths: 
+              - /v1/clients$
+      - name: users-grpc-service
+        host: users-grpc-service
+        protocol: grpc
+        port: 50051
+        routes:
+          - name: users-getAllUsers
+            paths: 
+              - /pb.UserService/GetAllUser
+            protocols: [grpc]
+          - name: users-addUser
+            paths:
+              - /pb.UserService/AddUser
+            protocols: [grpc]
