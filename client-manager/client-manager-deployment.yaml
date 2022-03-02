@@ -13,6 +13,17 @@ spec:
     spec:
       containers:
       - name: client-manager
-        image: makingthehand/client-manager:1.0.0
+        image: makingthehand/client-manager:1.0.3
+        resources: 
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "200m"
+            memory: "200Mi"
         ports:
         - containerPort: 3000
+
+        envFrom:
+          - configMapRef:
+              name: client-manager-configmap
